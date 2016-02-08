@@ -20,7 +20,8 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoia3VtbWVybG9lIiwiYSI6ImNpa2RzZGtxeDAwMjN2MGx6Z
 var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v8',
-    zoom: 0
+	center: [84,27],
+    zoom: 7
 });
 
 var source = new mapboxgl.GeoJSONSource({
@@ -34,10 +35,24 @@ map.on('style.load', function () {
         "type": "symbol",
         "source": "example",
         "layout": {
+            "icon-image": "bicycle-15",
+        },
+		"filter": ["==", "datasource", "youtube"]
+    });
+	map.addLayer({
+        "id": "example2",
+        "type": "symbol",
+        "source": "example",
+        "layout": {
             "icon-image": "rocket-15",
-        }
+        },
+		"filter": ["==", "datasource", "tomnod"]
     });
 });
+
+
+	
+	
 </script>
 
 </body>
