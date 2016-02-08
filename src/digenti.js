@@ -25,8 +25,8 @@ var search_record = {
   eventAt: '',
   publishedAt: '',
   updatedAt: '',
-  dataSource: 'youtube',
-  mediaType: 'video',
+  dataSource: '',
+  mediaType: '',
   mediaUrl: ''
 };
 
