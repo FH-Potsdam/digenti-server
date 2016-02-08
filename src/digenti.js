@@ -1,0 +1,58 @@
+/*global require*/
+var R = require('ramda');
+
+var trace = R.curry(function(msg,what){
+  console.log(msg,what);
+  return what;
+});
+
+var to_str = function(obj){ return ""+obj;};
+var quote_sql = R.pipe(to_str,R.replace(/\'/g,'\'\''));
+var wrap_with_str = R.curry(function(str,obj){ return str+obj+str;});
+var sql_str_value = R.pipe(quote_sql,wrap_with_str("'"));
+var join_with_comma = R.join(",");
+var suffix = R.curry(function(suffix,obj){return obj+suffix;});
+
+var from_json = JSON.parse;
+
+var search_record = {
+  sourceId: '',
+  requestTitle: '',
+  description: '',
+  latitude: '',
+  longitude: '',
+  locationName: '',
+  eventAt: '',
+  publishedAt: '',
+  updatedAt: '',
+  dataSource: 'youtube',
+  mediaType: 'video',
+  mediaUrl: ''
+};
+
+var create_table_for_search_record = function(){
+  var sqlColumns = R.pipe(R.keys,R.map(suffix(" text")),join_with_comma);
+  return "CREATE TABLE IF NOT EXISTS search_items ("+sqlColumns(search_record)+");";
+};
+
+var search_record_as_sql = function(item){
+  var columns = R.pipe(R.keys,join_with_comma);
+  var values = R.pipe(R.values,R.map(sql_str_value),join_with_comma);
+  return "INSERT INTO search_items ("+columns(item)+") VALUES ("+values(item)+");";
+};
+
+// Module definitions:
+exports.trace = trace;
+exports.to_str = to_str;
+exports.wrap_with_str = wrap_with_str;
+exports.join_with_comma = join_with_comma;
+exports.suffix = suffix;
+exports.from_json = from_json;
+
+// sql stuff - TODO: create an own module ?
+exports.quote_sql = quote_sql;
+exports.sql_str_value = sql_str_value;
+// search record stuff
+exports.search_record = search_record;
+exports.create_table_for_search_record = create_table_for_search_record;
+exports.search_record_as_sql = search_record_as_sql;
