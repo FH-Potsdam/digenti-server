@@ -1,6 +1,17 @@
 /*global require,exports*/
 var R = require('ramda');
 
+var requireWithoutCache = function(moduleSpec,shallow){
+  var deleteModuleCache = function(key){ delete require.cache[key];};
+  if(shallow){
+    deleteModuleCache(moduleSpec);
+  }else{
+    var deleteAll = R.pipe(R.keys,deleteModuleCache);
+    deleteAll(require.cache);
+  }
+  return require(moduleSpec);
+};
+
 var trace = R.curry(function(msg,what){
   console.log(msg,what);
   return what;
@@ -47,11 +58,13 @@ var create_search_record = function(item){
 
 // Module definitions:
 exports.trace = trace;
+exports.error = trace;
 exports.to_str = to_str;
 exports.wrap_with_str = wrap_with_str;
 exports.join_with_comma = join_with_comma;
 exports.suffix = suffix;
 exports.from_json = from_json;
+exports.require = requireWithoutCache;
 
 // sql stuff - TODO: create an own module ?
 exports.quote_sql = quote_sql;
