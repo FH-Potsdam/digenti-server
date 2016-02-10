@@ -1,8 +1,9 @@
 var converter = require("./converter");
 var request = require("./request");
 
-function get(){
+var get = function(){
+	console.log("collect aidr_twitter");
 	return converter.convert(request.get());
-}
+};
 
 module.exports.get = get;

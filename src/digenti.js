@@ -41,6 +41,10 @@ var search_record_as_sql = function(item){
   return "INSERT INTO search_items ("+columns(item)+") VALUES ("+values(item)+");";
 };
 
+var create_search_record = function(item){
+  return R.merge(R.clone(search_record), item);
+};
+
 // Module definitions:
 exports.trace = trace;
 exports.to_str = to_str;
@@ -56,3 +60,4 @@ exports.sql_str_value = sql_str_value;
 exports.search_record = search_record;
 exports.create_table_for_search_record = create_table_for_search_record;
 exports.search_record_as_sql = search_record_as_sql;
+exports.create_search_record = create_search_record;

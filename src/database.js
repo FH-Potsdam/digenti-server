@@ -1,5 +1,5 @@
-function upsert(data){
-	console.log("performing database ops. ", data);
-}
+var upsert = function(data){
+	console.log("performing database ops.");
+};
 
 module.exports.upsert = upsert;
