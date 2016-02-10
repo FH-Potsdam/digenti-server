@@ -1,9 +1,9 @@
 /*global require*/
 // See also: https://www.npmjs.com/package/pg
 var pg = require('pg');
-var con_url = "postgres://postgres:postgres@moa:5434/digenti";
+var db_url = require("./config").db.url;
 
-var client = new pg.Client(con_url);
+var client = new pg.Client(db_url);
 client.connect(function(err) {
   if(err) {
     return console.error('could not connect to postgres', err);

@@ -1,4 +1,4 @@
-/*global require*/
+/*global require,exports*/
 var R = require('ramda');
 
 var trace = R.curry(function(msg,what){
