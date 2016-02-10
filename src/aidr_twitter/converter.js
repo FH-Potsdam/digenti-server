@@ -10,16 +10,14 @@ var as_search_record = function(item){
     longitude: item.geometry.coordinates[0],
     publishedAt: item.properties.tweet_time,
     mediaUrl: item.properties.tweet_url,
-	dataSource: 'aidr_twitter',
-	mediaType: 'text'
+    dataSource: 'aidr_twitter',
+    mediaType: 'text'
   });
 };
 
 var convert = function(data){
-	console.log("convert data");
 	var mapping = R.pipe(R.prop("features"), R.map(as_search_record));
-	var converted =  mapping(data);
-	return converted;
+	return mapping(data);
 }
 
 module.exports.convert = convert;

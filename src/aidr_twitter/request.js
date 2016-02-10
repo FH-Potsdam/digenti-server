@@ -1,5 +1,5 @@
 var get = function(){
-	console.log("request data");
+	console.log("request tweets");
 	return {
 	  "type": "FeatureCollection",
 	  "features": [
