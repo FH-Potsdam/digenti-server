@@ -19,7 +19,7 @@ var get_list = function(callback, params){
 
   request.get(apiBaseUrl + '/search?' + queryStr+'&key=' + config.youtube.key, function (error, response, body) {
     if (error){
-      D.trace("Error", error)
+      D.trace("Error", error);
     }else if (response.statusCode != 200){
       D.trace("Error ", response.statusCode);
     }else{
@@ -41,7 +41,7 @@ var get_videos = function(callback, idsArray) {
 
   request.get(apiBaseUrl + '/videos?'+queryStr+'&key='+config.youtube.key, function (error, response, body) {
     if (error){
-      D.trace("Error", error)
+      D.trace("Error", error);
     }else if (response.statusCode != 200){
       D.trace("Error ", response.statusCode);
     }else{
