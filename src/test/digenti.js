@@ -1,3 +1,4 @@
+/*global require*/
 var R = require("ramda");
 var D = require("./../digenti");
 

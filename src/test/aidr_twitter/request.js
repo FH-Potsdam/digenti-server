@@ -1,6 +1,6 @@
-var D = require("./../digenti");
-var converter = D.require("./aidr_twitter/converter");
-var request = D.require("./aidr_twitter/request");
+/*global require*/
+var D = require("./../../digenti");
+var request = require("./../../aidr_twitter/request");
 
 var test_request_get = function(){
   var params = {
@@ -9,7 +9,7 @@ var test_request_get = function(){
     until: '2015-10-08',
     count: '10'
   };
-	D.trace("test_request_test", request.get(params));
+  request.get(D.trace("test_request_get_list"), params);
 };
 
 test_request_get();

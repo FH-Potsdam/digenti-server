@@ -1,12 +1,13 @@
-var D = require("./../digenti");
-var request = D.require("./youtube/request");
+/*global require*/
+var D = require("./../../digenti");
+var request = require("./../../youtube/request");
 
 var test_request_get_list = function(){
   var params = {
     part: 'snippet',
     location: '27.7167,85.3667',
     locationRadius: '300km',
-    maxResults: 50,
+    maxResults: 5,
     publishedAfter: '2015-04-24T00:00:00Z',
     publishedBefore: '2015-06-01T00:00:00Z',
     q: 'earthquake',
@@ -36,7 +37,7 @@ var test_request_get = function(){
     part: 'snippet',
     location: '27.7167,85.3667',
     locationRadius: '300km',
-    maxResults: 50,
+    maxResults: 5,
     publishedAfter: '2015-04-24T00:00:00Z',
     publishedBefore: '2015-06-01T00:00:00Z',
     q: 'earthquake',
