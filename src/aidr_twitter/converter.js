@@ -1,6 +1,8 @@
 var R = require("ramda");
 var D = require("./../digenti");
 
+var datasource = "aidr_twitter";
+
 var as_search_record = function(item){
   return D.create_search_record({
     sourceId: item.properties.tweet_id,
@@ -10,7 +12,7 @@ var as_search_record = function(item){
     longitude: item.geometry.coordinates[0],
     publishedAt: item.properties.tweet_time,
     mediaUrl: item.properties.tweet_url,
-    dataSource: 'aidr_twitter',
+    dataSource: datasource,
     mediaType: 'text'
   });
 };
@@ -22,3 +24,4 @@ var convert = function(data){
 
 module.exports.convert = convert;
 module.exports.as_search_record = as_search_record;
+module.exports.datasource = datasource;

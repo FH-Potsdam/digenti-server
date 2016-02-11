@@ -1,6 +1,8 @@
 var R = require("ramda");
 var D = require("./../digenti");
 
+var datasource = "crisisnet";
+
 var as_search_record = function(item){
   return D.create_search_record({
     sourceId: item.id,
@@ -10,7 +12,7 @@ var as_search_record = function(item){
     longitude: item.geo.coords[0],
     publishedAt: item.createdAt,
     updatedAt: item.updatedAt,
-    dataSource: 'crisisnet',
+    dataSource: datasource,
     mediaType: 'text'
   });
 };
@@ -22,3 +24,4 @@ var convert = function(data){
 
 module.exports.convert = convert;
 module.exports.as_search_record = as_search_record;
+module.exports.datasource = datasource;

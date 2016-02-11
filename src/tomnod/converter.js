@@ -1,6 +1,8 @@
 var R = require("ramda");
 var D = require("./../digenti");
 
+var datasource = "tomnod";
+
 var as_search_record = function(item){
   return D.create_search_record({
     sourceId: item.properties.id,
@@ -10,7 +12,7 @@ var as_search_record = function(item){
     publishedAt: item.properties.created_at,
     updatedAt: item.properties.updated_at,
     mediaUrl: item.properties.chip_url,
-    dataSource: 'tomnod',
+    dataSource: datasource,
     mediaType: 'image'
   });
 };
@@ -22,3 +24,4 @@ var convert = function(data){
 
 module.exports.convert = convert;
 module.exports.as_search_record = as_search_record;
+module.exports.datasource = datasource;

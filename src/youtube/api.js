@@ -11,3 +11,4 @@ var get = function(callback){
 };
 
 module.exports.get = get;
+module.exports.datasource = converter.datasource;

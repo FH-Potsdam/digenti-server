@@ -22,7 +22,7 @@ config.youtube.params = {
   part: 'snippet',
   location: '27.7167,85.3667',
   locationRadius: '300km',
-  maxResults: 50,
+  maxResults: 20,
   publishedAfter: '2015-04-24T00:00:00Z',
   publishedBefore: '2015-06-01T00:00:00Z',
   q: 'earthquake',

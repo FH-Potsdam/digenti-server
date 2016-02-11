@@ -1,6 +1,8 @@
 var R = require("ramda");
 var D = require("./../digenti");
 
+var datasource = "quakemap";
+
 var as_search_record = function(item){
   return D.create_search_record({
     sourceId: item.properties.id,
@@ -12,7 +14,7 @@ var as_search_record = function(item){
     eventAt: item.properties.date_of_incident,
     publishedAt: item.properties.created,
     updatedAt: item.properties.updated,
-    dataSource: 'quakemap',
+    dataSource: datasource,
     mediaType: 'text'
   });
 };
@@ -24,3 +26,4 @@ var convert = function(data){
 
 module.exports.convert = convert;
 module.exports.as_search_record = as_search_record;
+module.exports.datasource = datasource;

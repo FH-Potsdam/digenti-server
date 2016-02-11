@@ -10,6 +10,7 @@ var tomnod = D.require("./tomnod/api");
 
 var collect = function(){
 	R.forEach(function(channel){ 
+    db.delete_all(channel.datasource);
     channel.get(db.update);
 	}, [youtube]);
 };
