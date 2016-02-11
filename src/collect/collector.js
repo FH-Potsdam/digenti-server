@@ -10,8 +10,8 @@ var tomnod = D.require("./tomnod/api");
 
 var collect = function(){
 	R.forEach(function(channel){ 
-    db.update(channel.get());
-	}, [twitter, youtube, crisisnet, quakemap, tomnod]);
+    channel.get(db.update);
+	}, [youtube]);
 };
 
 collect();

@@ -18,5 +18,16 @@ config.twitter.access_token_secret = 'YOUR_TOKEN_SECRET';
 // Youtube API Settings
 config.youtube = {};
 config.youtube.key = 'AIzaSyDjy0jrxq79NkRnlC9oHYWODg9HyMaXmRA';
+config.youtube.params = {
+  part: 'snippet',
+  location: '27.7167,85.3667',
+  locationRadius: '300km',
+  maxResults: 50,
+  publishedAfter: '2015-04-24T00:00:00Z',
+  publishedBefore: '2015-06-01T00:00:00Z',
+  q: 'earthquake',
+  regionCode: 'np',
+  type: 'video'
+};
 
 module.exports = config;

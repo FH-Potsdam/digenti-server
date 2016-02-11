@@ -13,7 +13,7 @@ var test_request_get_list = function(){
     regionCode: 'np',
     type: 'video'
   };
-	request.get_list(params, D.trace("test_request_get_list"));
+	request.get_list(D.trace("test_request_get_list"), params);
 };
 
 var test_request_get_videos = function(){
@@ -28,8 +28,24 @@ var test_request_get_videos = function(){
     '-kR5lXSFZh8',
     'SSOqmGr1SY0'
   ];
-  request.get_videos(ids, D.trace("test_request_get_videos"));
+  request.get_videos(D.trace("test_request_get_videos"), ids);
 }
+
+var test_request_get = function(){
+  var params = {
+    part: 'snippet',
+    location: '27.7167,85.3667',
+    locationRadius: '300km',
+    maxResults: 50,
+    publishedAfter: '2015-04-24T00:00:00Z',
+    publishedBefore: '2015-06-01T00:00:00Z',
+    q: 'earthquake',
+    regionCode: 'np',
+    type: 'video'
+  };
+	request.get(D.trace("test_request_get"), params);
+};
 
 test_request_get_list();
 test_request_get_videos();
+test_request_get();
