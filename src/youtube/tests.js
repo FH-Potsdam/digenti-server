@@ -1,7 +1,7 @@
 var D = require("./../digenti");
 var request = D.require("./youtube/request");
 
-var test_request_get = function(){
+var test_request_get_list = function(){
   var params = {
     part: 'snippet',
     location: '27.7167,85.3667',
@@ -13,7 +13,23 @@ var test_request_get = function(){
     regionCode: 'np',
     type: 'video'
   };
-	D.trace("test_request_test", request.get(params));
+	request.get_list(params, D.trace("test_request_get_list"));
 };
 
-test_request_get();
+var test_request_get_videos = function(){
+  var ids = [ 
+    '_gE0UnyA2kI',
+    'GBQsxJ-Bmkc',
+    'W3fZZwQmEmQ',
+    'QxZx4T5bPUE',
+    '3YIwzDCwlgo',
+    'kJTrujsQKRo',
+    'HiBUB-4V4sk',
+    '-kR5lXSFZh8',
+    'SSOqmGr1SY0'
+  ];
+  request.get_videos(ids, D.trace("test_request_get_videos"));
+}
+
+test_request_get_list();
+test_request_get_videos();
