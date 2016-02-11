@@ -10,8 +10,8 @@ var as_search_record = function(item){
     description: item.content,
     latitude: item.geo.coords[1],
     longitude: item.geo.coords[0],
-    publishedAt: item.createdAt,
-    updatedAt: item.updatedAt,
+    publishedAt: D.parse_date(item.createdAt),
+    updatedAt: D.parse_date(item.updatedAt),
     dataSource: datasource,
     mediaType: 'text'
   });

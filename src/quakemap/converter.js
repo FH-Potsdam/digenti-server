@@ -11,9 +11,9 @@ var as_search_record = function(item){
     latitude: item.geometry.coordinates[1],
     longitude: item.geometry.coordinates[0],
     locationName: item.properties.location_name,
-    eventAt: item.properties.date_of_incident,
-    publishedAt: item.properties.created,
-    updatedAt: item.properties.updated,
+    eventAt: D.parse_date(item.properties.date_of_incident),
+    publishedAt: D.parse_date(item.properties.created),
+    updatedAt: D.parse_date(item.properties.updated),
     dataSource: datasource,
     mediaType: 'text'
   });

@@ -9,8 +9,8 @@ var as_search_record = function(item){
     requestTitle: item.properties.tag_type,
     latitude: item.geometry.coordinates[1],
     longitude: item.geometry.coordinates[0],
-    publishedAt: item.properties.created_at,
-    updatedAt: item.properties.updated_at,
+    publishedAt: D.parse_date(item.properties.created_at),
+    updatedAt: D.parse_date(item.properties.updated_at),
     mediaUrl: item.properties.chip_url,
     dataSource: datasource,
     mediaType: 'image'

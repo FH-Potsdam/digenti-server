@@ -10,7 +10,7 @@ var as_search_record = function(item){
     description: item.properties.tweet_text,
     latitude: item.geometry.coordinates[1],
     longitude: item.geometry.coordinates[0],
-    publishedAt: item.properties.tweet_time,
+    publishedAt: D.parse_date(item.properties.tweet_time),
     mediaUrl: item.properties.tweet_url,
     dataSource: datasource,
     mediaType: 'text'

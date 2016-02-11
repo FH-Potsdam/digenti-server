@@ -1,3 +1,4 @@
+/*global require,module*/
 var converter = require("./converter");
 var request = require("./request");
 var config = require("./../config");

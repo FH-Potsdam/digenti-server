@@ -50,6 +50,12 @@ var create_search_record = function(item){
   return R.merge(R.clone(search_record), item);
 };
 
+var parse_date = function(datestring){
+  if(!datestring || R.isEmpty(datestring)) return '';
+  return (new Date(Date.parse(datestring))).toISOString();
+};
+
+
 // Module definitions:
 exports.trace = trace;
 exports.error = trace;
@@ -59,6 +65,7 @@ exports.join_with_comma = join_with_comma;
 exports.suffix = suffix;
 exports.from_json = from_json;
 exports.require = requireWithoutCache;
+exports.parse_date = parse_date;
 
 // sql stuff - TODO: create an own module ?
 exports.quote_sql = quote_sql;

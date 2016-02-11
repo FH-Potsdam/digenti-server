@@ -1,3 +1,4 @@
+/*global require,module*/
 var R = require("ramda");
 var D = require("./../digenti");
 
@@ -10,7 +11,7 @@ var as_search_record = function(item){
     description: item.snippet.description,
     latitude: R.path(["recordingDetails", "location", "latitude"], item),
     longitude: R.path(["recordingDetails", "location", "longitude"], item),
-    publishedAt: item.snippet.publishedAt,
+    publishedAt: D.parse_date(item.snippet.publishedAt),
     mediaUrl: 'https://www.youtube.com/watch?v='+item.id,
     dataSource: datasource,
     mediaType: 'video'
