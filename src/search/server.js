@@ -63,7 +63,7 @@ var search = function(req,res){
     });
   });
 };
-//app.get("/search",search);
+app.get("/search",search);
 app.post("/search",search);
 
 //////////////////
