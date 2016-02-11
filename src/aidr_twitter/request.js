@@ -1,5 +1,24 @@
-var get = function(){
-	console.log("request tweets");
+/*global require,module*/
+var D = require("./../digenti");
+var config = D.require('./config');
+var Twitter = D.require('twitter');
+
+var client = new Twitter({
+  consumer_key: config.twitter.consumer_key,
+  consumer_secret: config.twitter.consumer_secret,
+  access_token_key: config.twitter.access_token_key,
+  access_token_secret: config.twitter.access_token_secret,
+});
+
+var get = function(params){
+  client.get("search/tweets", params, function(err, tweets, response){
+    if (err) {
+      D.trace("Error", err);
+    }else{
+      D.trace("Response", tweets);
+    }
+  });
+
 	return {
 	  "type": "FeatureCollection",
 	  "features": [
@@ -27,4 +46,5 @@ var get = function(){
 	};
 };
 
+// Module definitions
 module.exports.get = get;
