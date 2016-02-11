@@ -9,7 +9,9 @@ var as_search_record = function(item){
     latitude: item.recordingDetails.location.latitude,
     longitude: item.recordingDetails.location.longitude,
     publishedAt: item.snippet.publishedAt,
-    mediaUrl: 'https://www.youtube.com/watch?v='+item.id
+    mediaUrl: 'https://www.youtube.com/watch?v='+item.id,
+    dataSource: 'youtube',
+    mediaType: 'video'
   });
 };
 
