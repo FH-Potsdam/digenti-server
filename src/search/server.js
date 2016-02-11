@@ -31,9 +31,9 @@ app.use(function(req, res, next) {
 //////////////
 var defaultQuery = {
   maxResults: 50,
-  location: "27.7167,85.3667",
+  location: "27.7167,85.3667", // Use ST_PointInsideCircle of postgis
   locationRadius: "300km",
-  publishedAfter: "2015-04-24T00:00:00Z",
+  publishedAfter: "2015-04-24T00:00:00Z", // Use date functions of postgres
   publishedBefore: "2015-06-01T00:00:00Z",
   "q": ""
 };
