@@ -1,5 +1,93 @@
-var get = function(){
-	console.log("request videos");
+/*global require,module*/
+var request = require('request');
+var qs = require('querystring');
+var D = require("./../digenti");
+var config = D.require('./config');
+
+var apiBaseUrl = 'https://www.googleapis.com/youtube/v3';
+
+
+
+/*
+module.exports = function (params, callback) {
+
+
+  ///////////////////
+  // Videos Query
+  ///////////////////
+
+  // More info: https://developers.google.com/youtube/v3/docs/videos/list
+
+  function queryVideos(idsArray) {
+
+    var query = {
+      part: 'id,snippet,recordingDetails',
+      id: idsArray.join(',')
+    };
+
+    var queryStr = qs.stringify(query);
+
+    console.log("Querying geolocation of " + idsArray.length + " videos...");
+
+    request.get(apiBaseUrl + '/videos?'+queryStr+'&key='+config.youtube.key, function (error, response, body) {
+      if (error)
+        return callback(error);
+      else if (response.statusCode != 200)
+        return callback("Error " + response.statusCode);
+
+      console.log("Geolocation successfully retrieved.\n");
+
+      try {
+        data = JSON.parse(body);
+      } catch (e) {
+        return callback(error);
+      }
+
+      callback(null, data);
+    });
+  }
+}
+
+*/
+
+
+
+var get = function(params){
+
+  var query = {
+    part: 'snippet',
+    type: 'video'
+  };
+
+  query = Object.assign(query, params); // merge two arrays
+  var queryStr = qs.stringify(query);
+
+  console.log("Youtube video search...");
+
+  request.get(apiBaseUrl + '/search?' + queryStr+'&key=' + config.youtube.key, function (error, response, body) {
+    if (error)
+      D.trace("Error", error)
+    else if (response.statusCode != 200)
+      D.trace("Error ", response.statusCode);
+    else
+      D.trace("Response", body);
+      
+      /*
+    var json = JSON.parse(body);
+
+    console.log(json.pageInfo.totalResults + " videos found. " + json.items.length + " parsed.");
+
+    // Loop through all videos and get IDs
+    var idsArray = [];
+    for (var i=0; i<json.items.length; i++) {
+      idsArray.push(json.items[i].id.videoId);
+    }
+
+    queryVideos(idsArray);
+    */
+  });
+  
+  
 	return {
     "kind": "youtube#videoListResponse",
     "etag": "\"mPrpS7Nrk6Ggi_P7VJ8-KsEOiIw/DNgx6b5M5Mj6CkSPMzfycDeRXVE\"",
@@ -54,3 +142,12 @@ var get = function(){
 };
 
 module.exports.get = get;
+
+
+// Google API Query
+// GET https://www.googleapis.com/youtube/v3/search?part=snippet&location=27.7167%2C85.3667&locationRadius=300km&maxResults=50&publishedAfter=2015-04-24T00%3A00%3A00Z&publishedBefore=2015-06-01T00%3A00%3A00Z&q=earthquake&regionCode=np&type=video&key={YOUR_API_KEY}
+
+// geo-search-tool Query
+// https://www.googleapis.com/youtube/v3/search?location=27.7172453%2C85.3239605&locationRadius=100km&maxResults=50&order=date&part=id%2Csnippet&publishedAfter=2014-11-18T07%3A03%3A13Z&publishedBefore=2015-07-01T21%3A33%3A11Z&q=Earthquake&type=video&videoEmbeddable=any&key=AIzaSyAEcfhZe0akd47CTYaEOWQ1bLCCbLUfVEY&videoLiscense=any
+
+// More info: https://developers.google.com/youtube/v3/docs/search/list
