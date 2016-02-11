@@ -7,7 +7,7 @@ var init = function(){
 	R = require("ramda");
 	database = require("./database");
 	twitter = require("./aidr_twitter/api");
-}
+};
 
 var collect = function(){
 	init();

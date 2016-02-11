@@ -20,7 +20,7 @@ var as_search_record = function(item){
 var convert = function(data){
 	var mapping = R.pipe(R.prop("features"), R.map(as_search_record));
 	return mapping(data);
-}
+};
 
 module.exports.convert = convert;
 module.exports.as_search_record = as_search_record;

@@ -66,7 +66,7 @@ var get = function(params){
 
   request.get(apiBaseUrl + '/search?' + queryStr+'&key=' + config.youtube.key, function (error, response, body) {
     if (error)
-      D.trace("Error", error)
+      D.trace("Error", error);
     else if (response.statusCode != 200)
       D.trace("Error ", response.statusCode);
     else
