@@ -55,7 +55,7 @@ var get_videos = function(callback, idsArray) {
 var get = function(callback, params){
   get_list(function(result){
     get_videos(callback, result);
-  });
+  }, params);
 };
 
 // Module definitions
