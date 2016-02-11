@@ -14,6 +14,7 @@ config.twitter.consumer_key = 'YOUR_CONSUMER_KEY';
 config.twitter.consumer_secret = 'YOUR_CONSUMER_SECRET';
 config.twitter.access_token_key = 'YOUR_TOKEN_KEY';
 config.twitter.access_token_secret = 'YOUR_TOKEN_SECRET';
+config.twitter.params = {};
 
 // Youtube API Settings
 config.youtube = {};
