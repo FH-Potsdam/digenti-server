@@ -24,7 +24,7 @@ var query = function(sql, resultFun){
 var ilike = R.curry(function(column,str){ return column+" ilike '%"+D.quote_sql(str.trim())+"%'";});
 var or = R.join(" OR ");
 var ilike_column = function(column){ return R.pipe(R.map(ilike(column)),or); };
-var csv_text = R.split(/\s*,s*/);
+var csv_text = R.split(/\s*,\s*/);
 
 // Module definitions
 module.exports.query = query;

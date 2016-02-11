@@ -9,7 +9,6 @@ var bodyParser = require('body-parser');
 var config = D.require('./config');
 
 var app = express();
-
 ///////////////////////
 // Server Middleware
 ///////////////////////
@@ -45,11 +44,16 @@ var search = function(req,res){
   var keywords = db.csv_text(query.q);
   var ilike_title = db.ilike_column("requesttitle");
   var ilike_desc = db.ilike_column("description");
-  var sql = "SELECT * FROM search_items WHERE "
-            +ilike_title(keywords)+" OR "+ilike_desc(keywords)
-            +" LIMIT "+query.maxResults+";";
-  db.query(sql,function(resultSet){
-    res.json({dev:{ sql: sql},query:req.body, count:resultSet.rowCount,records:resultSet.rows}); 
+  var from =" FROM search_items ";
+  var count = "SELECT count(*)", allColumns="SELECT *";
+  var where = " WHERE "+ilike_title(keywords)+" OR "+ilike_desc(keywords)+" LIMIT "+query.maxResults+";";
+  var countSql = count+from+where;
+  var allSql = allColumns+from+where;
+  db.query(countSql,function(resultSet){
+    var hits = resultSet.rows[0];
+    db.query(allSql,function(resultSet){
+      res.json({ dev: { sql: allSql}, hits: hits,query: req.body,count: resultSet.rowCount,records : resultSet.rows });
+    });
   });
 };
 //app.get("/search",search);
