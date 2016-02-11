@@ -38,15 +38,22 @@ var defaultQuery = {
   "q": ""
 };
 
+var locationQuery = function(query){
+  var point = R.replace(',',' ',query.location);
+  var radius = parseInt(query.locationRadius)*1000+".0";
+  var result = "ST_DWithin(ST_Point(CAST(latitude as float),CAST(longitude as float))::geography,ST_GeographyFromText('SRID=4326;POINT("+point+")'),"+radius+")";
+  return result;
+};
+
 var search = function(req,res){
   var query = R.merge(defaultQuery,req.body);
   D.trace("query:",query);
   var keywords = db.csv_text(query.q);
   var ilike_title = db.ilike_column("requesttitle");
   var ilike_desc = db.ilike_column("description");
-  var from =" FROM search_items ";
+  var from =" FROM "+config.db.searchtable;
   var count = "SELECT count(*)", allColumns="SELECT *";
-  var where = " WHERE "+ilike_title(keywords)+" OR "+ilike_desc(keywords)+" LIMIT "+query.maxResults+";";
+  var where = " WHERE "+ilike_title(keywords)+" OR "+ilike_desc(keywords)+" AND "+locationQuery(query)+" LIMIT "+query.maxResults+";";
   var countSql = count+from+where;
   var allSql = allColumns+from+where;
   db.query(countSql,function(resultSet){
