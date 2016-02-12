@@ -41,11 +41,6 @@ var search_record = {
   mediaUrl: ''
 };
 
-var create_table_for_search_record = function(){
-  var sqlColumns = R.pipe(R.keys,R.map(suffix(" text")),join_with_comma);
-  return "CREATE TABLE IF NOT EXISTS search_items ("+sqlColumns(search_record)+");";
-};
-
 var create_search_record = function(item){
   return R.merge(R.clone(search_record), item);
 };
@@ -81,5 +76,4 @@ exports.quote_sql = quote_sql;
 exports.sql_str_value = sql_str_value;
 // search record stuff
 exports.search_record = search_record;
-exports.create_table_for_search_record = create_table_for_search_record;
 exports.create_search_record = create_search_record;

@@ -9,6 +9,7 @@ var quakemap = D.require("./quakemap/api");
 var tomnod = D.require("./tomnod/api");
 
 var collect = function(){
+  db.create_table_for_search_record();
 	R.forEach(function(channel){ 
     db.delete_all(channel.datasource);
     channel.get(db.update);
