@@ -7,6 +7,7 @@ var fs = require('fs');
 var express = require('express');
 var bodyParser = require('body-parser');
 var config = D.require('./config');
+var collector = D.require('./collect/collector');
 
 var app = express();
 ///////////////////////
@@ -74,7 +75,8 @@ var search = function(req,res){
 };
 
 var import_data = function(req,res){
-  D.trace("Starting import data ...","TODO: Implement me");
+  D.trace("Starting import data ...");
+  collector.collect();
   res.send("TODO: Implement me");
 };
 

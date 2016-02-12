@@ -15,7 +15,5 @@ var collect = function(){
 	}, [youtube, twitter, crisisnet, quakemap, tomnod]);
 };
 
-collect();
-
 // Module definitions
 module.exports.collect = collect;
