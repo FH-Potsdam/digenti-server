@@ -52,7 +52,11 @@ var create_search_record = function(item){
 
 var parse_date = function(datestring){
   if(!datestring || R.isEmpty(datestring)) return '';
-  return (new Date(Date.parse(datestring))).toISOString();
+  try{
+    return (new Date(Date.parse(datestring))).toISOString();
+  }catch(e){
+    return '';
+  }
 };
 
 
