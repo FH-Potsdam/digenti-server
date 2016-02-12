@@ -38,31 +38,31 @@ var defaultQuery = {
   "q": ""
 };
 
-var dateQuery = function(query){
-  var between_before_after = R.map(db.date_between(query.publishedBefore,query.publishedAfter));
-  var or_betweens = R.compose(db.or,between_before_after);
-  return or_betweens(['publishedat','eventat','updatedat']);
+var dates = function(query){
+  var between_before_after = R.compose(db.or,R.map(db.date_between(query.publishedBefore,query.publishedAfter)));
+  return between_before_after(['publishedat','eventat','updatedat']);
 };
 
-var locationQuery = function(query){
+var locations = function(query){
   var point = R.replace(',',' ',query.location);
   var radius = parseInt(query.locationRadius)*1000+".0";
   var result = "ST_DWithin(ST_Point(CAST(latitude as float),CAST(longitude as float))::geography,ST_GeographyFromText('SRID=4326;POINT("+point+")'),"+radius+")";
   return result;
 };
 
+var keywords = function(query){
+  var keywords = db.csv_text(query.q);
+  var apply_to_keywords = function(column){ return db.ilike_column(column)(keywords);};
+  return db.or(R.map(apply_to_keywords,["requesttitle","description"]));
+};
+
 var search = function(req,res){
   var query = R.merge(defaultQuery,req.body);
   D.trace("query:",query);
-  var keywords = db.csv_text(query.q);
-  var ilike_title = db.ilike_column("requesttitle");
-  var ilike_desc = db.ilike_column("description");
   var from =" FROM "+config.db.searchtable;
   var count = "SELECT count(*)", allColumns="SELECT *";
-  var where = " WHERE ("+ilike_title(keywords)+" OR "+ilike_desc(keywords)+")"
-    +" AND ("+locationQuery(query)+")"
-    +" AND ("+dateQuery(query)+")"
-    +" LIMIT "+query.maxResults+";";
+  var clauses = [keywords,locations,dates];
+  var where = " WHERE "+db.and(R.map(function(fun){ return fun(query);},clauses))+" LIMIT "+query.maxResults+";";
   var countSql = count+from+where;
   var allSql = allColumns+from+where;
   db.query(countSql,function(resultSet){
@@ -72,8 +72,15 @@ var search = function(req,res){
     });
   });
 };
+
+var import_data = function(req,res){
+  D.trace("Starting import data ...","TODO: Implement me");
+  res.send("TODO: Implement me");
+};
+
 app.get("/search",search);
 app.post("/search",search);
+app.get("/wosollenwirhinziehen",import_data);
 
 //////////////////
 // Server Setup
