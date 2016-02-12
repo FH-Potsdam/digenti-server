@@ -101,6 +101,6 @@ var test_convert = function(){
   }, converter.convert(data));
 };
 
-//test_as_search_record();
-//test_filter();
+test_as_search_record();
+test_filter();
 test_convert();
