@@ -31,11 +31,17 @@ app.use(function(req, res, next) {
 //////////////
 var defaultQuery = {
   maxResults: 50,
-  location: "27.7167,85.3667", // Use ST_PointInsideCircle of postgis
+  location: "27.7167,85.3667", 
   locationRadius: "300km",
-  publishedAfter: "2015-04-24T00:00:00Z", // Use date functions of postgres
-  publishedBefore: "2015-06-01T00:00:00Z",
+  publishedAfter: "2016-01-01T00:00:00Z", 
+  publishedBefore: "2015-01-01T00:00:00Z",
   "q": ""
+};
+
+var dateQuery = function(query){
+  var between_before_after = R.map(db.date_between(query.publishedBefore,query.publishedAfter));
+  var or_betweens = R.compose(db.or,between_before_after);
+  return or_betweens(['publishedat','eventat','updatedat']);
 };
 
 var locationQuery = function(query){
@@ -53,7 +59,10 @@ var search = function(req,res){
   var ilike_desc = db.ilike_column("description");
   var from =" FROM "+config.db.searchtable;
   var count = "SELECT count(*)", allColumns="SELECT *";
-  var where = " WHERE "+ilike_title(keywords)+" OR "+ilike_desc(keywords)+" AND "+locationQuery(query)+" LIMIT "+query.maxResults+";";
+  var where = " WHERE ("+ilike_title(keywords)+" OR "+ilike_desc(keywords)+")"
+    +" AND ("+locationQuery(query)+")"
+    +" AND ("+dateQuery(query)+")"
+    +" LIMIT "+query.maxResults+";";
   var countSql = count+from+where;
   var allSql = allColumns+from+where;
   db.query(countSql,function(resultSet){
