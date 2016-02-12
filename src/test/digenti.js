@@ -14,4 +14,12 @@ var test_date = function(){
   R.forEach(R.pipe(D.parse_date, D.trace("test_date")), dates);
 };
 
+var test_nprop = function(){
+  D.trace("1", D.nprop("a.b.c", {a:{b:{c:1}}}));
+  D.trace("", D.nprop("a.b.d", {a:{b:{c:1}}}));
+  D.trace("", D.nprop("a.b.c.e", {a:{b:{c:1}}}));
+  D.trace("{c:1}", D.nprop("a.b", {a:{b:{c:1}}}));
+};
+
 test_date();
+test_nprop();

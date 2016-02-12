@@ -59,6 +59,10 @@ var parse_date = function(datestring){
   }
 };
 
+var nprop = function(dotpath, obj){
+  var prop = R.path(dotpath.split("."), obj);
+  return prop ? prop : '';
+};
 
 // Module definitions:
 exports.trace = trace;
@@ -70,6 +74,7 @@ exports.suffix = suffix;
 exports.from_json = from_json;
 exports.require = requireWithoutCache;
 exports.parse_date = parse_date;
+exports.nprop = nprop;
 
 // sql stuff - TODO: create an own module ?
 exports.quote_sql = quote_sql;
