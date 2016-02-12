@@ -20,9 +20,15 @@ var as_search_record = function(item){
 
 var convert = function(data){
 	var mapping = R.pipe(R.prop("items"), R.map(as_search_record));
-	return mapping(data);
+	return filter(mapping(data));
+};
+
+var filter = function(items){
+  var check = item => (!R.isEmpty(item.latitude) && !R.isEmpty(item.longitude));
+  return R.filter(check, items);
 };
 
 module.exports.convert = convert;
 module.exports.as_search_record = as_search_record;
 module.exports.datasource = datasource;
+module.exports.filter = filter;
