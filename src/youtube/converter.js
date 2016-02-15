@@ -7,13 +7,13 @@ var datasource = "youtube";
 var as_search_record = function(item){
   return D.create_search_record({
     sourceId: item.id,
-    requestTitle: D.nprop("snippet.title", item),
+    title: D.nprop("snippet.title", item),
     description: D.nprop("snippet.description", item),
     latitude: D.nprop("recordingDetails.location.latitude", item),
     longitude: D.nprop("recordingDetails.location.longitude", item),
     publishedAt: D.parse_date(D.nprop("snippet.publishedAt", item)),
     mediaUrl: 'https://www.youtube.com/watch?v='+item.id,
-    dataSource: datasource,
+    provider: datasource,
     mediaType: 'video'
   });
 };

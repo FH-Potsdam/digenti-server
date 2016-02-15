@@ -28,17 +28,20 @@ var from_json = JSON.parse;
 
 var search_record = {
   sourceId: '',
-  requestTitle: '',
+  title: '',
   description: '',
+  relevance: '',
   latitude: '',
   longitude: '',
   locationName: '',
   eventAt: '',
   publishedAt: '',
   updatedAt: '',
-  dataSource: '',
+  provider: '',
+  mediaChannel: '',
   mediaType: '',
-  mediaUrl: ''
+  mediaUrl: '',
+  freetext: ''
 };
 
 var create_search_record = function(item){

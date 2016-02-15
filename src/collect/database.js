@@ -29,7 +29,7 @@ var search_record_as_sql = function(item){
 };
 
 var delete_query = function(datasource){
-  return "DELETE FROM " + config.db.searchtable + " WHERE datasource LIKE '" + datasource + "';"; 
+  return "DELETE FROM " + config.db.searchtable + " WHERE provider LIKE '" + datasource + "';"; 
 }
 
 var create_table_query = function(){

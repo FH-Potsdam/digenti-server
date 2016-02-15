@@ -6,7 +6,7 @@ var datasource = "quakemap";
 var as_search_record = function(item){
   return D.create_search_record({
     sourceId: item.properties.id,
-    requestTitle: item.properties.title,
+    title: item.properties.title,
     description: item.properties.content,
     latitude: item.geometry.coordinates[1],
     longitude: item.geometry.coordinates[0],
@@ -14,7 +14,7 @@ var as_search_record = function(item){
     eventAt: D.parse_date(item.properties.date_of_incident),
     publishedAt: D.parse_date(item.properties.created),
     updatedAt: D.parse_date(item.properties.updated),
-    dataSource: datasource,
+    provider: datasource,
     mediaType: 'text'
   });
 };

@@ -6,13 +6,13 @@ var datasource = "tomnod";
 var as_search_record = function(item){
   return D.create_search_record({
     sourceId: item.properties.id,
-    requestTitle: item.properties.tag_type,
+    title: item.properties.tag_type,
     latitude: item.geometry.coordinates[1],
     longitude: item.geometry.coordinates[0],
     publishedAt: D.parse_date(item.properties.created_at),
     updatedAt: D.parse_date(item.properties.updated_at),
     mediaUrl: item.properties.chip_url,
-    dataSource: datasource,
+    provider: datasource,
     mediaType: 'image'
   });
 };

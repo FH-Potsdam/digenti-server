@@ -6,13 +6,13 @@ var datasource = "crisisnet";
 var as_search_record = function(item){
   return D.create_search_record({
     sourceId: item.id,
-    requestTitle: item.summary,
+    title: item.summary,
     description: item.content,
     latitude: item.geo.coords[1],
     longitude: item.geo.coords[0],
     publishedAt: D.parse_date(item.createdAt),
     updatedAt: D.parse_date(item.updatedAt),
-    dataSource: datasource,
+    provider: datasource,
     mediaType: 'text'
   });
 };

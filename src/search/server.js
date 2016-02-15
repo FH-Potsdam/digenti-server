@@ -54,7 +54,7 @@ var locations = function(query){
 var keywords = function(query){
   var keywords = db.csv_text(query.q);
   var apply_to_keywords = function(column){ return db.ilike_column(column)(keywords);};
-  return db.or(R.map(apply_to_keywords,["requesttitle","description"]));
+  return db.or(R.map(apply_to_keywords,["title","description"]));
 };
 
 var search = function(req,res){
