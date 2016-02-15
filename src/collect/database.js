@@ -34,7 +34,8 @@ var delete_query = function(datasource){
 
 var create_table_query = function(){
   var sqlColumns = R.pipe(R.keys,R.map(D.suffix(" text")),D.join_with_comma);
-  return "CREATE TABLE IF NOT EXISTS " + config.db.searchtable + " (" + sqlColumns(D.search_record) + ");";
+  var freetextColumn = ", freetext tsvector";
+  return "CREATE TABLE IF NOT EXISTS " + config.db.searchtable + " (" + sqlColumns(D.search_record) + freetextColumn + ");";
 };
 
 // Module definitions

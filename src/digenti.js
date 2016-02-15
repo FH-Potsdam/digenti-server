@@ -40,8 +40,7 @@ var search_record = {
   provider: '',
   mediaChannel: '',
   mediaType: '',
-  mediaUrl: '',
-  freetext: ''
+  mediaUrl: ''
 };
 
 var create_search_record = function(item){
