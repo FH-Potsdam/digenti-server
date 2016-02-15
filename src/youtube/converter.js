@@ -2,7 +2,7 @@
 var R = require("ramda");
 var D = require("./../digenti");
 
-var datasource = "youtube";
+var provider = "youtube";
 
 var as_search_record = function(item){
   return D.create_search_record({
@@ -12,9 +12,10 @@ var as_search_record = function(item){
     latitude: D.nprop("recordingDetails.location.latitude", item),
     longitude: D.nprop("recordingDetails.location.longitude", item),
     publishedAt: D.parse_date(D.nprop("snippet.publishedAt", item)),
-    mediaUrl: 'https://www.youtube.com/watch?v='+item.id,
-    provider: datasource,
-    mediaType: 'video'
+    mediaUrl: "https://www.youtube.com/watch?v="+item.id,
+    provider: provider,
+    mediaType: "video",
+    mediaChannel: "youtube"
   });
 };
 
@@ -30,5 +31,5 @@ var filter = function(items){
 
 module.exports.convert = convert;
 module.exports.as_search_record = as_search_record;
-module.exports.datasource = datasource;
+module.exports.provider = provider;
 module.exports.filter = filter;

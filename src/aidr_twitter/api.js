@@ -3,7 +3,7 @@ var request = require("./request");
 var config = require("./../config");
 
 var get = function(callback){
-	console.log("collect aidr_twitter");
+  console.log("collect aidr_twitter");
   request.get(function(result){
     var search_items = converter.convert(result);
     callback(search_items);
@@ -11,4 +11,4 @@ var get = function(callback){
 };
 
 module.exports.get = get;
-module.exports.datasource = converter.datasource;
+module.exports.provider = converter.provider;
