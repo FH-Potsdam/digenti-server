@@ -32,9 +32,9 @@ app.use(function(req, res, next) {
 //////////////
 var defaultQuery = {
   maxResults: 50,
-  location: "27.7167,85.3667", 
+  location: "27.7167,85.3667",
   locationRadius: "300km",
-  publishedAfter: "2016-01-01T00:00:00Z", 
+  publishedAfter: "2016-01-01T00:00:00Z",
   publishedBefore: "2015-01-01T00:00:00Z",
   "q": ""
 };
@@ -60,12 +60,21 @@ var keywords = function(query){
 var search = function(req,res){
   var query = R.merge(defaultQuery,req.body);
   D.trace("query:",query);
+  var where = " WHERE 1 = 1";
+  if(R.not(R.isNil(query.where))){
+    where = " WHERE "+query.where+" LIMIT "+D.quote_sql(query.maxResults);
+  }else{
+    var clauses = [keywords,locations,dates];
+    where = " WHERE "+db.and(R.map(function(fun){ return fun(query);},clauses))+" LIMIT "+D.quote_sql(query.maxResults)+";";
+  }
   var from =" FROM "+config.db.searchtable;
   var count = "SELECT count(*)", allColumns="SELECT *";
-  var clauses = [keywords,locations,dates];
-  var where = " WHERE "+db.and(R.map(function(fun){ return fun(query);},clauses))+" LIMIT "+query.maxResults+";";
+  var columns = allColumns;
+  if(R.not(R.isNil(query.columns))){
+    columns = "SELECT "+D.quote_sql(query.columns);
+  }  
   var countSql = count+from+where;
-  var allSql = allColumns+from+where;
+  var allSql = columns+from+where;
   db.query(countSql,function(resultSet){
     var hits = resultSet.rows[0];
     db.query(allSql,function(resultSet){
@@ -75,7 +84,7 @@ var search = function(req,res){
 };
 
 var import_data = function(req,res){
-  D.trace("Starting import data ...");
+  D.trace("Starting import data ...","");
   collector.collect();
   res.send("TODO: Implement me");
 };
