@@ -34,15 +34,6 @@ var update_tsvector = R.curry(function(table,lang,tsvector_column,src_columns){
 // Usage: update_freetext(['title','description','locationname','provider','mediaurl']);
 // Make sure to create an index : CREATE INDEX search_items_freetext_idx ON search_items USING gin(freetext);
 var update_freetext = update_tsvector(config.db.searchtable,'english','freetext');
-// TODO: make available as function
-/*
- CREATE FUNCTION update_search_items_freetext()
- RETURNS TRIGGER AS $_$
- BEGIN
-  UPDATE search_items SET freetext = to_tsvector('english',coalesce(title,'') || ' ' || coalesce(description,'') || ' ' || coalesce(locationname,'') || ' ' || coalesce(provider,'') || ' ' || coalesce(mediaurl,''));
- END $_$ LANGUAGE 'plpgsql';
- */
-// CREATE TRIGGER search_items_freetext AFTER INSERT OR UPDATE ON search_items EXECUTE PROCEDURE update_search_items_freetext();
 var ilike = R.curry(function(column,str){ return column+" ilike '%"+D.quote_sql(str.trim())+"%'";});
 var or = R.join(" OR ");
 var and = R.join(" AND ");

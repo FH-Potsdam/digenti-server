@@ -43,6 +43,8 @@ var test_insertquery = function(){
 	}));
 };
 
+
+
 //test_create_table();
 test_update();
 //test_totsvector();
