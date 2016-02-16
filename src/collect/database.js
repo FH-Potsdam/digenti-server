@@ -57,21 +57,17 @@ var drop_table_query = function(){
   return "DROP TABLE IF EXISTS " + config.db.searchtable + ";";
 };
 
-
 var totsvector = function(language, fields){
 	return "to_tsvector('" + language + "', concat_ws(' ', " + fields.join(",") + "))";
 };
 
 var update_tsvector = R.curry(function(table,lang,tsvector_column,src_columns){
-  var join_with_space = R.join(" || ' ' || ");
-  var coalesce_space = function(column){ return "coalesce("+column+",'')";};
-  var tsvector_creation = R.pipe(R.map(coalesce_space),join_with_space);
-  var sql = "UPDATE "+table+" SET "+tsvector_column+" = to_tsvector('"+lang+"',"+tsvector_creation(src_columns)+");";
+  var sql = "UPDATE " + table + " SET " + tsvector_column + " = " + totsvector(lang, src_columns) + ";";
   query(sql,D.trace("Updated by "+sql));
 });
 
-var update_freetext = update_tsvector(config.db.searchtable,'english','freetext');
 // Usage for example: update_freetext(['title','description','locationname','provider','mediaurl']);
+var update_freetext = update_tsvector(config.db.searchtable,'english','freetext');
 
 var trigger_query = function(){
 	var str = `
@@ -104,3 +100,5 @@ module.exports.create_table_query = create_table_query;
 module.exports.totsvector = totsvector;
 module.exports.search_record_as_sql = search_record_as_sql;
 module.exports.prepare_database = prepare_database;
+module.exports.update_tsvector = update_tsvector;
+module.exports.update_freetext = update_freetext;
