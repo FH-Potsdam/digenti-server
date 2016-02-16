@@ -10,7 +10,7 @@ var prepare_database = function(callback){
 	db.query(query, function(result){
   	if(callback) callback(result);
   });
-}
+};
 
 var delete_all = function(provider, callback){
   if(!provider) return;
@@ -43,7 +43,7 @@ var search_record_as_sql = function(item){
 };
 
 var delete_query = function(provider){
-  return "DELETE FROM " + config.db.searchtable + " WHERE provider LIKE '" + provider + "';"; 
+  return "DELETE FROM " + config.db.searchtable + " WHERE provider LIKE '" + provider + "';";
 };
 
 var create_table_query = function(){

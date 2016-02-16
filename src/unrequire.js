@@ -2,7 +2,7 @@
 
 var unrequire = function(moduleSpec,shallow){
   if(shallow){
-    delete require.cache[moduleSpec];    
+    delete require.cache[moduleSpec];
   }else{
     clear();
   }

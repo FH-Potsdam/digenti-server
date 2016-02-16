@@ -10,12 +10,12 @@ var tomnod = D.require("./tomnod/api");
 
 var prepare_database = function(){
 	db.prepare_database();
-}
+};
 
 var collect = function(){
-	R.forEach(function(channel){ 
+	R.forEach(function(channel){
     db.delete_all(channel.provider, function(){
-    	channel.get(db.update);	
+    	channel.get(db.update);
     });
 	}, [youtube, twitter, crisisnet, quakemap, tomnod]);
 };
