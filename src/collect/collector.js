@@ -13,7 +13,6 @@ var prepare_database = function(){
 }
 
 var collect = function(){
-  db.create_table_for_search_record();
 	R.forEach(function(channel){ 
     db.delete_all(channel.provider, function(){
     	channel.get(db.update);	

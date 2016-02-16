@@ -8,7 +8,6 @@ var config = D.require("./config");
 var prepare_database = function(callback){
 	var query = drop_table_query() + create_table_query() + trigger_query() + create_index_query();
 	db.query(query, function(result){
-  	console.log(result);
   	if(callback) callback(result);
   });
 }
@@ -69,6 +68,7 @@ var update_tsvector = R.curry(function(table,lang,tsvector_column,src_columns){
 // Usage for example: update_freetext(['title','description','locationname','provider','mediaurl']);
 var update_freetext = update_tsvector(config.db.searchtable,'english','freetext');
 
+// TODO: use parameters/config
 var trigger_query = function(){
 	var str = `
 		CREATE OR REPLACE FUNCTION update_search_items_freetext()
@@ -87,6 +87,7 @@ var trigger_query = function(){
   return str;
 };
 
+// TODO: use parameters/config
 var create_index_query = function(){
 	return "CREATE INDEX search_items_freetext_idx ON search_items USING gin(freetext)";
 };
