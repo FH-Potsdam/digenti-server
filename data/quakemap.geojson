@@ -1,4 +1,4 @@
-{{
+{
 	"type": "FeatureCollection",
 	"features": [{
 		"type": "Feature",
@@ -11919,4 +11919,4 @@
 			"updated": "2015-09-30T08:52:34+00:00"
 		}
 	}]
-}}
+}

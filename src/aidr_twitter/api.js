@@ -7,7 +7,7 @@ var get = function(callback){
   request.get(function(result){
     var search_items = converter.convert(result);
     callback(search_items);
-  }, config.twitter.params);
+  });
 };
 
 module.exports.get = get;

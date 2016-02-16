@@ -13,10 +13,12 @@ var query = function(sql, resultFun){
     client.query(sql, function(err, result) {
       if(err) {
         D.error('error running query', err);
+        client.end();
+      }else{
+	      //D.trace("Query result for "+sql,result);
+	      client.end();
+	      resultFun(result);
       }
-      //D.trace("Query result for "+sql,result);
-      client.end();
-      resultFun(result);
     });
   });
 };

@@ -21,5 +21,10 @@ var test_nprop = function(){
   D.trace("{c:1}", D.nprop("a.b", {a:{b:{c:1}}}));
 };
 
+var test_json_from_file = function(filename){
+	D.get_json_from_file(filename, D.trace("FeatureCollection"));
+};
+
 test_date();
 test_nprop();
+test_json_from_file("./../data/aidr_twitter.geojson");

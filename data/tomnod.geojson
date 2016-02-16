@@ -1,4 +1,4 @@
-{{
+{
 	"type": "FeatureCollection",
 	"features": [{
 		"type": "Feature",
@@ -67078,4 +67078,4 @@
 			"created_at": "2015-05-01T14:27:02Z"
 		}
 	}]
-}}
+}

@@ -28,7 +28,7 @@ var get_list = function(callback, params){
     }
   });
   
-}
+};
 
 var get_videos = function(callback, idsArray) {
 
@@ -49,7 +49,7 @@ var get_videos = function(callback, idsArray) {
     }
   });
   
-}
+};
 
 
 var get = function(callback, params){

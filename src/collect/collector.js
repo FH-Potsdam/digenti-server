@@ -11,8 +11,9 @@ var tomnod = D.require("./tomnod/api");
 var collect = function(){
   db.create_table_for_search_record();
 	R.forEach(function(channel){ 
-    db.delete_all(channel.provider);
-    channel.get(db.update);
+    db.delete_all(channel.provider, function(){
+    	channel.get(db.update);	
+    });
 	}, [youtube, twitter, crisisnet, quakemap, tomnod]);
 };
 
