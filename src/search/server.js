@@ -62,25 +62,30 @@ var search = function(req,res){
   var query = R.merge(defaultQuery,req.body);
   D.trace("query:",query);
   var where = " WHERE 1 = 1";
-  var limit_and_offset = " LIMIT "+D.quote_sql(query.maxResults)+" OFFSET "+D.quote_sql(query.offset)+";";
+  var limit_and_offset = " LIMIT "+D.quote_sql(query.max)+" OFFSET "+D.quote_sql(query.offset)+";";
   if(R.not(R.isNil(query.where))){
-    where = " WHERE "+query.where+limit_and_offset;
+    where = " WHERE "+query.where;
   }else{
     var clauses = [keywords,locations,dates];
-    where = " WHERE "+db.and(R.map(function(fun){ return fun(query);},clauses))+limit_and_offset;
+    where = " WHERE "+db.and(R.map(function(fun){ return fun(query);},clauses));
   }
   var from =" FROM "+config.db.searchtable;
-  var count = "SELECT count(*)", allColumns="SELECT *";
+  var count = "SELECT count(*)", allColumns="SELECT title,description,relevance,locationname,latitude,longitude,eventat,publishedat,updatedat,provider,mediachannel,mediatype,mediaurl";
   var columns = allColumns;
   if(R.not(R.isNil(query.columns))){
     columns = "SELECT "+D.quote_sql(query.columns);
   }
   var countSql = count+from+where;
-  var allSql = columns+from+where;
-  db.query(countSql,function(resultSet){
-    var hits = resultSet.rows[0];
-    db.query(allSql,function(resultSet){
-      res.json({ dev: { sql: allSql}, hits: hits,query: req.body,count: resultSet.rowCount,records : resultSet.rows });
+  var allSql = columns+from+where+limit_and_offset;
+  db.query(countSql,function(hitResults){
+    var hits = parseInt(hitResults.rows[0].count);
+    db.query(allSql,function(queryResults){
+      res.json({
+        dev: { sql: allSql},
+        hits: hits,
+        query: req.body,
+        count: queryResults.rowCount,
+        records : queryResults.rows });
     });
   });
 };
