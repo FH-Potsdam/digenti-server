@@ -32,6 +32,7 @@ app.use(function(req, res, next) {
 //////////////
 var defaultQuery = {
   maxResults: 50,
+  offset: 0,
   location: "27.7167,85.3667",
   locationRadius: "300km",
   publishedAfter: "2016-01-01T00:00:00Z",
@@ -61,18 +62,19 @@ var search = function(req,res){
   var query = R.merge(defaultQuery,req.body);
   D.trace("query:",query);
   var where = " WHERE 1 = 1";
+  var limit_and_offset = " LIMIT "+D.quote_sql(query.maxResults)+" OFFSET "+D.quote_sql(query.offset)+";";
   if(R.not(R.isNil(query.where))){
-    where = " WHERE "+query.where+" LIMIT "+D.quote_sql(query.maxResults);
+    where = " WHERE "+query.where+limit_and_offset;
   }else{
     var clauses = [keywords,locations,dates];
-    where = " WHERE "+db.and(R.map(function(fun){ return fun(query);},clauses))+" LIMIT "+D.quote_sql(query.maxResults)+";";
+    where = " WHERE "+db.and(R.map(function(fun){ return fun(query);},clauses))+limit_and_offset;
   }
   var from =" FROM "+config.db.searchtable;
   var count = "SELECT count(*)", allColumns="SELECT *";
   var columns = allColumns;
   if(R.not(R.isNil(query.columns))){
     columns = "SELECT "+D.quote_sql(query.columns);
-  }  
+  }
   var countSql = count+from+where;
   var allSql = columns+from+where;
   db.query(countSql,function(resultSet){
@@ -86,7 +88,7 @@ var search = function(req,res){
 var import_data = function(req,res){
   D.trace("Starting import data ...","");
   collector.collect();
-  res.send("TODO: Implement me");
+  res.send("Imported data");
 };
 
 app.get("/search",search);
