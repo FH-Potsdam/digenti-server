@@ -31,8 +31,8 @@ app.use(function(req, res, next) {
 // REST API
 //////////////
 var defaultQuery = {
-  maxResults: 50,
-  offset: 0,
+  max: 10,
+  offset: 1,
   location: "27.7167,85.3667",
   locationRadius: "300km",
   publishedAfter: "2016-01-01T00:00:00Z",
