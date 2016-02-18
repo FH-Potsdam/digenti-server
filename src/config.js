@@ -1,5 +1,7 @@
 /*global module*/
-var config = {};
+var config = {
+  secret: 'QgbU4KhpGd'
+};
 
 config.db = {};
 config.db.url = "postgres:postgres@moa:5434/digenti";

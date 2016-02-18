@@ -90,15 +90,19 @@ var search = function(req,res){
   });
 };
 
-var import_data = function(req,res){
-  D.trace("Starting import data ...","");
-  collector.collect();
-  res.send("Imported data");
-};
+var protect_by_key = R.curry(function(fun_to_protect,req,res){
+  if(req.body.secret===config.secret){
+    fun_to_protect();
+    res.send("Success");
+  }else{
+    res.send("Error");
+  }
+});
 
 app.get("/search",search);
 app.post("/search",search);
-app.get("/wosollenwirhinziehen",import_data);
+app.post("/collect",protect_by_key(collector.collect));
+app.post("/prepare",protect_by_key(collector.prepare_database));
 
 //////////////////
 // Server Setup
