@@ -4,20 +4,19 @@ var D = require("./digenti");
 var pg = D.require("pg");
 var config = D.require("./config");
 
-var query = function(sql, resultFun){
-  var client = new pg.Client(config.db.url);
-  client.connect(function(err){
-    if(err) {
-      D.error('could not connect to postgres', err);
+var query = function(sql,resultFun){
+  pg.connect(config.db.url,function(err,client,done){
+    if(err){
+      D.trace("Error in connecting db: ",err);
+      return;
     }
-    client.query(sql, function(err, result) {
-      if(err) {
-        D.error('error running query', err);
-      }else{
-	      //D.trace("Query result for "+sql,result);
-	      resultFun(result);
+    client.query(sql,function(error,result){
+      done();
+      if(error){
+        D.trace("Error in query db:",error);
+        return;
       }
-      client.end();
+      resultFun(result);
     });
   });
 };
