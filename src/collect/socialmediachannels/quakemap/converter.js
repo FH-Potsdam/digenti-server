@@ -1,19 +1,21 @@
 var R = require("ramda");
-var D = require("./../digenti");
+var D = require("./../../../digenti");
 
-var provider = "tomnod";
+var provider = "quakemap";
 
 var as_search_record = function(item){
   return D.create_search_record({
     sourceId: item.properties.id,
-    title: item.properties.tag_type,
+    title: item.properties.title,
+    description: item.properties.content,
     latitude: item.geometry.coordinates[1],
     longitude: item.geometry.coordinates[0],
-    publishedAt: D.parse_date(item.properties.created_at),
-    updatedAt: D.parse_date(item.properties.updated_at),
-    mediaUrl: item.properties.chip_url,
+    locationName: item.properties.location_name,
+    eventAt: D.parse_date(item.properties.date_of_incident),
+    publishedAt: D.parse_date(item.properties.created),
+    updatedAt: D.parse_date(item.properties.updated),
     provider: provider,
-    mediaType: 'image'
+    mediaType: 'text'
   });
 };
 

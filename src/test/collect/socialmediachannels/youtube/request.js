@@ -1,6 +1,6 @@
 /*global require*/
-var D = require("./../../digenti");
-var request = require("./../../youtube/request");
+var D = require("./../../../../digenti");
+var request = require("./../../../../collect/socialmediachannels/youtube/request");
 
 var test_request_get_list = function(){
   var params = {

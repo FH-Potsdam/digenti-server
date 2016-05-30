@@ -1,6 +1,6 @@
 /*global require,module*/
 var R = require("ramda");
-var D = require("./../digenti");
+var D = require("./../../../digenti");
 
 var provider = "youtube";
 

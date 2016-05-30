@@ -1,7 +1,7 @@
 /*global require*/
 var R = require("ramda");
-var D = require("./../../digenti");
-var converter = require("./../../youtube/converter");
+var D = require("./../../../../digenti");
+var converter = require("./../../../../collect/socialmediachannels/youtube/converter");
 
 var test_as_search_record = function(){
   var items = [

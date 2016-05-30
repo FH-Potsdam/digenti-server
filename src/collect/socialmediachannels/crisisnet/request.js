@@ -1,8 +1,8 @@
 /*global require,module*/
-var D = require("./../digenti");
+var D = require("./../../../digenti");
 
 var get = function(callback){
-	D.get_json_from_file("./../data/aidr_twitter.geojson", callback);
+	D.get_json_from_file("./../data/crisisnet.json", callback);
 };
 
 // Module definitions

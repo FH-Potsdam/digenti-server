@@ -1,21 +1,20 @@
 var R = require("ramda");
-var D = require("./../digenti");
+var D = require("./../../../digenti");
 
-var provider = "quakemap";
+var provider = "aidr";
 
 var as_search_record = function(item){
   return D.create_search_record({
-    sourceId: item.properties.id,
-    title: item.properties.title,
-    description: item.properties.content,
+    sourceId: item.properties.tweet_id,
+    title: item.properties.label,
+    description: item.properties.tweet_text,
     latitude: item.geometry.coordinates[1],
     longitude: item.geometry.coordinates[0],
-    locationName: item.properties.location_name,
-    eventAt: D.parse_date(item.properties.date_of_incident),
-    publishedAt: D.parse_date(item.properties.created),
-    updatedAt: D.parse_date(item.properties.updated),
+    publishedAt: D.parse_date(item.properties.tweet_time),
+    mediaUrl: item.properties.tweet_url,
     provider: provider,
-    mediaType: 'text'
+    mediaType: "text",
+    mediaChannel: "twitter"
   });
 };
 

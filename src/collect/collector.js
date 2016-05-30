@@ -2,11 +2,11 @@
 var R = require("ramda");
 var D = require("./../digenti");
 var db = D.require("./collect/database");
-var twitter = D.require("./aidr_twitter/api");
-var youtube = D.require("./youtube/api");
-var crisisnet = D.require("./crisisnet/api");
-var quakemap = D.require("./quakemap/api");
-var tomnod = D.require("./tomnod/api");
+var twitter = D.require("./collect/socialmediachannels/aidr_twitter/api");
+var youtube = D.require("./collect/socialmediachannels/youtube/api");
+var crisisnet = D.require("./collect/socialmediachannels/crisisnet/api");
+var quakemap = D.require("./collect/socialmediachannels/quakemap/api");
+var tomnod = D.require("./collect/socialmediachannels/tomnod/api");
 
 var prepare_database = function(){
 	db.prepare_database();

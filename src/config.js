@@ -4,7 +4,7 @@ var config = {
 };
 
 config.db = {};
-config.db.url = "postgres:postgres@moa:5434/digenti";
+config.db.url = "postgres:postgres@localhost:5432/digenti";
 config.db.searchtable = "search_items";
 config.server={};
 config.server.port = 2305;

@@ -62,7 +62,7 @@ var totsvector = function(language, fields){
 
 var update_tsvector = R.curry(function(table,lang,tsvector_column,src_columns){
   var sql = "UPDATE " + table + " SET " + tsvector_column + " = " + totsvector(lang, src_columns) + ";";
-  query(sql,D.trace("Updated by "+sql));
+  db.query(sql,D.trace("Updated by "+sql));
 });
 
 // Usage for example: update_freetext(['title','description','locationname','provider','mediaurl']);
@@ -89,7 +89,7 @@ var trigger_query = function(){
 
 // TODO: use parameters/config
 var create_index_query = function(){
-	return "CREATE INDEX search_items_freetext_idx ON search_items USING gin(freetext)";
+	return "CREATE INDEX search_items_freetext_idx ON search_items USING gin(freetext);";
 };
 
 

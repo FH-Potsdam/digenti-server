@@ -2,8 +2,8 @@
 var request = require("request");
 var qs = require("querystring");
 var R = require("ramda");
-var D = require("./../digenti");
-var config = require("./../config");
+var D = require("./../../../digenti");
+var config = require("./../../../config");
 
 var apiBaseUrl = 'https://www.googleapis.com/youtube/v3';
 

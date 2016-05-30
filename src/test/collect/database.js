@@ -47,8 +47,8 @@ var test_update_freetext = function(){
 	database.update_freetext(['title','description','locationname','provider','mediaurl']);
 };
 
-//test_create_table();
+test_create_table();
 //test_update();
 //test_totsvector();
 //test_insertquery();
-test_update_freetext();
+//test_update_freetext();

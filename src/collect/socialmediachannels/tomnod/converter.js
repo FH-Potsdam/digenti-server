@@ -1,20 +1,19 @@
 var R = require("ramda");
-var D = require("./../digenti");
+var D = require("./../../../digenti");
 
-var provider = "aidr";
+var provider = "tomnod";
 
 var as_search_record = function(item){
   return D.create_search_record({
-    sourceId: item.properties.tweet_id,
-    title: item.properties.label,
-    description: item.properties.tweet_text,
+    sourceId: item.properties.id,
+    title: item.properties.tag_type,
     latitude: item.geometry.coordinates[1],
     longitude: item.geometry.coordinates[0],
-    publishedAt: D.parse_date(item.properties.tweet_time),
-    mediaUrl: item.properties.tweet_url,
+    publishedAt: D.parse_date(item.properties.created_at),
+    updatedAt: D.parse_date(item.properties.updated_at),
+    mediaUrl: item.properties.chip_url,
     provider: provider,
-    mediaType: "text",
-    mediaChannel: "twitter"
+    mediaType: 'image'
   });
 };
 
