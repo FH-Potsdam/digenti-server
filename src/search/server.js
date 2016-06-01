@@ -10,6 +10,7 @@ var config = D.require('./config');
 var collector = D.require('./collect/collector');
 var searcher = D.require('./search/searcher');
 var fosqueries = D.require('./search/fosqueries');
+var surface = D.require('./search/surface');
 
 var app = express();
 ///////////////////////
@@ -42,6 +43,7 @@ var protect_by_key = R.curry(function(fun_to_protect,req,res){
   }
 });
 
+app.get("/surface/line", surface.elevateLine);
 app.get("/search/fos/point", fosqueries.searchFosByPoint);
 app.get("/search/places/fos", fosqueries.searchPlacesByFos);
 app.get("/search", searcher.search);
