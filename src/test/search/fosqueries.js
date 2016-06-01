@@ -9,5 +9,9 @@ var mockRes = {json:D.trace("result:")};
 var test_searchFosByPoint = function(){
   fos.searchFosByPoint(mockReq, mockRes);
 };
+var test_searchPlaceByFos = function(){
+  fos.searchPlacesByFos(mockReq, mockRes);
+};
 
 test_searchFosByPoint();
+test_searchPlaceByFos();

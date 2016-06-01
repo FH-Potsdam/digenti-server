@@ -25,6 +25,7 @@ var sql_str_value = R.pipe(quote_sql,wrap_with_str("'"));
 var join_with_comma = R.join(",");
 var suffix = R.curry(function(suffix,obj){return obj+suffix;});
 var from_json = JSON.parse;
+var to_int = function(n){return parseInt(n, 10);};
 
 var search_record = {
   sourceId: '',
@@ -82,6 +83,7 @@ exports.require = requireWithoutCache;
 exports.parse_date = parse_date;
 exports.nprop = nprop;
 exports.get_json_from_file = get_json_from_file;
+exports.to_int = to_int;
 
 // sql stuff - TODO: create an own module ?
 exports.quote_sql = quote_sql;

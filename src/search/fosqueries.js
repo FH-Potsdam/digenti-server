@@ -10,50 +10,87 @@ var places_table = "places_aoi_2d";
 
 var defaultFosByPointQuery = {
   location: "-73.0270699,10.3910411", // 1;"468769318";"Manaure Balcón del Cesar";"town";;"POINT(-73.0270699 10.3910411)"
-  locationRadius: "5" // pixel
+  locationRadius: 5 // pixel
 };
 
-var locations = function(query){
-  var point = R.replace(',',' ',query.location);
-  var radius = parseInt(query.locationRadius)*1000+".0";
-  var result = "ST_DWithin(ST_Point(CAST(latitude as float),CAST(longitude as float))::geography,ST_GeographyFromText('SRID=4326;POINT("+point+")'),"+radius+")";
-  return result;
+var defaultPlacesByFosQuery = {
+	max: 5,
+  offset: 0,
+  fosmin: 4,
+  fosmax: 5,
+  locationRadius: 5 // pixel
 };
 
-var intersects = function(query){
-  return "ST_Intersects(geom, rast)";
-};
+var fosminmax = function(query){return stneighborhood(D.to_int(query.locationRadius), "avg") + " >= " + D.to_int(query.fosmin) + " AND " + stneighborhood(D.to_int(query.locationRadius), "avg") + " <= " + D.to_int(query.fosmax)};
+var stintersects = function(query){return "ST_Intersects(geom, rast)";};
+var stpoint = function(location){return "ST_GeomFromText('POINT( " + R.replace(',',' ', D.quote_sql(location)) + ")', 4326)";};
+var stneighborhood = function(radius, calc){return "(SELECT " + calc + "(s) FROM UNNEST(ST_Neighborhood(rast, geom, " + radius + ", " + radius + ")) s)";};
+var stneighborhood_as = R.curry(function(radius, calc){return db.as(calc, stneighborhood(radius, calc));});
 
 var searchFosByPoint = function(req, res){
   var query = R.merge(defaultFosByPointQuery, req.body);
   D.trace("query:", query);
   
-  // SELECT
-  var radius = parseInt(query.locationRadius, 10);
-  var subselect = function(i){return "(SELECT " + i + "(s) FROM UNNEST(ST_Neighborhood(rast, geom, " + radius + ", " + radius + ")) s) AS " + i;};
-  var columns = "SELECT " + R.map(subselect, ["avg", "sum", "max"]);
+  // COLUMNS
+  var subselect = stneighborhood_as(D.to_int(query.locationRadius));
+  var columns = db.comma(R.map(subselect, ["avg", "sum", "max"]));
   
   // FROM
-  var point = R.replace(',',' ', query.location);
-  var from =" FROM " + fos_table + ", (SELECT ST_GeomFromText('POINT( " + point + ")', 4326) AS geom) foo";
+  var from =" FROM " + fos_table + ", (SELECT (" + stpoint(query.location) + ") AS geom) foo";
   
   // WHERE
-  var clauses = [intersects];
+  var clauses = [stintersects];
   var where = " WHERE " + db.and(R.map(function(fun){ return fun(query);}, clauses));
   
-  var select = columns + from + where + ";";
+  // SELECT 
+  var select = "SELECT " + columns + from + where + ";";
   
-  D.trace("select:", select);
-    
-  db.query(select, function(queryResults){
+  db.query(select, function(results){
 		res.json({
       dev: { sql: select},
       query: req.body,
-      count: queryResults.rowCount,
-      records : queryResults.rows 
+      count: results.rowCount,
+      records : results.rows 
     });
+  });
+};
+
+var searchPlacesByFos = function(req, res){
+  var query = R.merge(defaultPlacesByFosQuery, req.body);
+  D.trace("query:", query);
+  
+  // COLUMNS
+  var subselect = stneighborhood_as(D.to_int(query.locationRadius));
+  var columns = places_table + ".*, " + db.comma(R.map(subselect, ["avg", "sum", "max"]));
+  
+  // FROM
+  var from = " FROM " + db.comma([fos_table, places_table]);
+  
+  // WHERE
+  var clauses = [stintersects, fosminmax];
+  var where = " WHERE " + db.and(R.map(function(fun){ return fun(query);}, clauses));
+  
+  // LIMIT
+  var limit = db.limit_and_offset(query.max, query.offset);
+  
+  // SELECT
+  var select = "SELECT " + columns + from + where + limit + ";";
+  var count = "SELECT count(*) " + from + where + ";";
+    
+  db.query(count, function(hits){
+  	var hits = D.to_int(hits.rows[0].count);
+  	db.query(select, function(results){
+			res.json({
+	      dev: { sql: select},
+	      hits: hits,
+	      query: req.body,
+	      count: results.rowCount,
+	      records : results.rows 
+	    });
+  	});
   });
 };
 
 // Module definitions
 module.exports.searchFosByPoint = searchFosByPoint;
+module.exports.searchPlacesByFos = searchPlacesByFos;

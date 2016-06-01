@@ -42,8 +42,12 @@ var protect_by_key = R.curry(function(fun_to_protect,req,res){
   }
 });
 
-app.get("/fos/point", fosqueries.searchFosByPoint);
+app.get("/search/fos/point", fosqueries.searchFosByPoint);
+app.get("/search/places/fos", fosqueries.searchPlacesByFos);
 app.get("/search", searcher.search);
+
+app.post("/search/fos/point", fosqueries.searchFosByPoint);
+app.post("/search/places/fos", fosqueries.searchPlacesByFos);
 app.post("/search", searcher.search);
 app.post("/collect",protect_by_key(collector.collect));
 app.post("/prepare",protect_by_key(collector.prepare_database));
