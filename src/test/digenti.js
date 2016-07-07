@@ -27,4 +27,4 @@ var test_json_from_file = function(filename){
 
 test_date();
 test_nprop();
-test_json_from_file("./../data/aidr_twitter.geojson");
+test_json_from_file("./../data/vgi/aidr_twitter.geojson");

@@ -30,6 +30,6 @@ var youtube_json_to_sql = function(filename){
 // Module definitions
 exports.json_to_sql = youtube_json_to_sql;
 /* Example: reads videos.json and write videos.json.sql
-var y = require("../data/youtube_to_sql");
+var y = require("../data/vgi/youtube_to_sql");
 y.json_to_sql('videos.json');
 */
